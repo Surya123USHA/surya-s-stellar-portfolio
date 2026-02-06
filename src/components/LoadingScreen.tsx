@@ -12,19 +12,25 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
   const [displayedName, setDisplayedName] = useState("");
 
   useEffect(() => {
-    // Typing animation for name
-    let nameIndex = 0;
-    const typeInterval = setInterval(() => {
-      if (nameIndex <= name.length) {
-        setDisplayedName(name.slice(0, nameIndex));
-        nameIndex++;
-      } else {
-        clearInterval(typeInterval);
-        setPhase("compiling");
-      }
-    }, 150);
+    // Longer delay before typing starts
+    const startDelay = setTimeout(() => {
+      // Typing animation for name - slower typing
+      let nameIndex = 0;
+      const typeInterval = setInterval(() => {
+        if (nameIndex <= name.length) {
+          setDisplayedName(name.slice(0, nameIndex));
+          nameIndex++;
+        } else {
+          clearInterval(typeInterval);
+          // Pause before compiling phase
+          setTimeout(() => setPhase("compiling"), 800);
+        }
+      }, 250); // Slower typing speed
 
-    return () => clearInterval(typeInterval);
+      return () => clearInterval(typeInterval);
+    }, 500);
+
+    return () => clearTimeout(startDelay);
   }, []);
 
   useEffect(() => {
@@ -34,12 +40,13 @@ const LoadingScreen = ({ onComplete }: LoadingScreenProps) => {
           if (prev >= 100) {
             clearInterval(progressInterval);
             setPhase("done");
-            setTimeout(onComplete, 500);
+            setTimeout(onComplete, 1000); // Longer delay before transition
             return 100;
           }
-          return prev + Math.random() * 15;
+          // Slower progress increments
+          return prev + Math.random() * 8;
         });
-      }, 100);
+      }, 150); // Slower interval
 
       return () => clearInterval(progressInterval);
     }

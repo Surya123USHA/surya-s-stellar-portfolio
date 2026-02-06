@@ -6,10 +6,12 @@ import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
+import Gallery from "@/components/Gallery";
 import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import GuideMascot from "@/components/GuideMascot";
 
 const Index = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,11 +58,15 @@ const Index = () => {
               <About />
               <Skills />
               <Projects />
+              <Gallery />
               <Experience />
               <Contact />
             </main>
             
             <Footer />
+            
+            {/* Guide Mascot Helper */}
+            <GuideMascot />
           </motion.div>
         )}
       </AnimatePresence>
